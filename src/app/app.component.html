@@ -1,0 +1,118 @@
+<header [hidden]="!global.isLoggedIn()">
+    <div class="navbar-fixed">
+        <nav class="nav-top blue-grey darken-2 z-depth-2">
+            <div class="nav-wrapper">
+                <a class="brand-logo center" onclick="showSideNav()">&nbsp;<img class="responsive-img" src="assets/artemis32.png" />&nbsp;ARTEMIS&nbsp;</a>
+                <ul>
+                    <li>
+                        <a data-activates="mobile-menu" class="button-collapse hide"><i class="material-icons">menu</i></a>
+                        <a data-activates="mobile-menu" onclick="showSideNav()" class="btn-floating red" title="Menu"><i class="material-icons">menu</i></a>
+                    </li>
+                    <li class="right"><a (click)="global.navigate('help') "title="Help"><i class="material-icons white-text">help</i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="z-depth-2 side-nav" id="mobile-menu">
+        <div class="nav-wrapper">
+            <ul style="margin: 0;">
+                <li>
+                    <div class="z-depth-2" style="background: url('assets/userbg.jpg')" >
+                        <div class="dropdown-button white-text valign-wrapper" data-activates="usermenu">&nbsp;
+                            <table style="cursor:pointer">
+                                <tr>
+                                    <td class="valign-wrapper"><i class="material-icons white-text">account_circle</i></td>
+                                    <td style="line-height:2;" class="name white-text">{{global.getFullName()}}</td>
+                                    <td><i class="material-icons right white-text">arrow_drop_down</i></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <ul id='usermenu' class='dropdown-content z-depth-4' style="margin-top: 65px;">
+                            <li><a class="deep-orange accent-3 white-text"><i class="material-icons white-text">cancel</i>Close Menu</a></li>
+                            <li><a onclick="hideSideNav()" (click)="global.navigate('profile')"><i class="material-icons">account_circle</i>Profile</a></li>
+                            <li><a onclick="hideSideNav()" (click)="global.navigate('messages')"><i class="material-icons">email</i>Messages</a></li>
+                            <li><a onclick="hideSideNav()" (click)="global.navigate('tasks')"><i class="material-icons">toc</i>Tasks</a></li>
+                            <li class="divider"></li>
+                            <li *ngIf="global.isAdmin()"><a onclick="hideSideNav()" (click)="global.navigate('adminconsole')"><i class="material-icons">supervisor_account</i>Admin Console</a></li>
+                            <li><a onclick="hideSideNav()" (click)="global.navigate('login')"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li [hidden]="!global.isProjectSelected()"><a onclick="hideSideNav()" (click)="global.navigate('')" onclick="hideSideNav()" class="collapsible-header waves-effect waves-teal"><i class="material-icons">home</i>Home</a></li>
+                <li [hidden]="!global.isProjectSelected()">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">work</i>Resources<i class="material-icons right">expand_more</i></a>
+                            <div class="collapsible-body z-depth-2">
+                                <ul class="collapsible-menu" onclick="hideSideNav()" >
+                                    <li><a (click)="global.navigate('applications')"><i class="material-icons">apps</i>Applications</a></li>
+                                    <li><a (click)="global.navigate('requirements')"><i class="material-icons">description</i>Requirements</a></li>
+                                    <li><a (click)="global.navigate('testelements')"><i class="material-icons">my_location</i>Test Elements</a></li>
+                                    <li><a (click)="global.navigate('testdata')"><i class="material-icons">input</i>Test Data</a></li>
+                                    <li><a (click)="global.navigate('drive')"><i class="material-icons">cloud</i>Drive</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li [hidden]="!global.isProjectSelected()"><a onclick="hideSideNav()" (click)="global.navigate('tests')" class="collapsible-header waves-effect waves-teal"><i class="material-icons">library_books</i>Test Suite</a></li>
+                <li [hidden]="!global.isProjectSelected()"><a onclick="hideSideNav()" (click)="global.navigate('execution')" class="collapsible-header waves-effect waves-teal"><i class="material-icons">play_circle_outline</i>Execution</a></li>
+                <li [hidden]="!global.isProjectSelected()"><a onclick="hideSideNav()" (click)="global.navigate('reports')" class="collapsible-header waves-effect waves-teal"><i class="material-icons">insert_chart</i>Reports</a></li>
+                <li [hidden]="!global.isProjectSelected()"><a onclick="hideSideNav()" (click)="global.navigate('defects')" class="collapsible-header waves-effect waves-teal"><i class="material-icons">bug_report</i>Defects</a></li>
+                <li [hidden]="!global.isProjectSelected()">
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <a class="collapsible-header waves-effect waves-teal"><i class="material-icons">build</i>Configurations<i class="material-icons right">expand_more</i></a>
+                            <div class="collapsible-body z-depth-2">
+                                <ul class="collapsible-menu">
+                                    <li><a (click)="global.navigate('appsettings')"><i class="material-icons">settings</i>General Settings</a></li>
+                                    <li><a (click)="global.navigate('testsettings')"><i class="material-icons">settings_applications</i>Test Settings</a></li>
+                                    <li><a (click)="global.navigate('plugins')"><i class="material-icons">extension</i>Plugins</a></li>
+                                    <li><a (click)="global.navigate('devices')"><i class="material-icons">important_devices</i>Environment / Devices</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li><a onclick="hideSideNav()" (click)="global.navigate('help')" class="collapsible-header waves-effect waves-teal"><i class="material-icons">help</i>Help</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<main [ngClass]="{'blue-grey darken-1' : !global.isLoggedIn()}">
+    <router-outlet></router-outlet>
+</main>
+<footer [hidden]="!global.isLoggedIn()" class="page-footer footer-main white center">
+    <a class="green-text text-darken-2" href="https://www.sqs.com" target="_blank" style="font-size: 10px;">
+        <img class="responsive-img" src="assets/SQS_Logo_16.png" />&nbsp;&nbsp;©&nbsp;SQS India BFSI Limited
+    </a>
+</footer>
+<footer [hidden]="global.isLoggedIn()" class="page-footer blue-grey">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Welcome to ARTEMIS!</h5>
+                <p class="grey-text text-lighten-4">
+                    ARTEMIS is an advanced and accentuated test automation framework. Our simple, easy to learn, 
+                    easy to use, scalable and collaborative test automation framework allows you to plan, prepare, 
+                    execute, analyze and improvise your tests easily and effectively.
+                </p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Quick Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" (click)="global.navigate('contact')">Contact</a></li>
+                    <li><a class="grey-text text-lighten-3" (click)="global.navigate('about')">About</a></li>
+                    <li><a class="grey-text text-lighten-3" (click)="global.navigate('help')">Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright center">
+        <div class="container">
+            <a class="grey-text text-lighten-4" href="https://www.sqs.com" target="_blank">
+                <img class="responsive-img" src="assets/SQS_Logo_32.png" /><br>©&nbsp;SQS India BFSI Limited</a>
+            
+        </div>
+    </div>
+</footer>

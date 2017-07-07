@@ -1,0 +1,46 @@
+<br/>
+<div class="container">
+    <div class="row grey-text text-darken-1" *ngIf="global.isProjectAdmin()" >
+        <alert></alert>
+        <div class="col s12">
+            <h5 class="left">{{title}}</h5>
+        </div>
+        <div class="col s12"><br/>
+            <form materialize name="form" (ngSubmit)="saveApplication()" #form="ngForm" novalidate>
+                <div class="row">
+                    <div class='input-field col s12'>
+                        <input placeholder="" data-length="80" type='text' name='name' id='name' [(ngModel)]="formModel.name" #name="ngModel" />
+                        <label for='name'>Application Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="type" name="type" materialize="material_select" [materializeSelectOptions]="types" [(ngModel)]="formModel.type" #type="ngModel">
+                            <option value="" disabled selected>Select</option>
+                            <option *ngFor="let option of types" [ngValue]="option">{{option}}</option>
+                        </select>
+                        <label for="type">Application Type</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="" type='text' data-length="100" name='description' id='description' [(ngModel)]="formModel.description" #description="ngModel" />
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="" type='text' data-length="100" name='technology' id='technology' [(ngModel)]="formModel.technology" #technology="ngModel" />
+                        <label for="technology">Technology</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button type='submit' class="btn blue-grey darken-2 waves-effect" style="width: 200px">Save</button>
+                        <button type="reset" (click)="global.navigate('applications')" class="btn red waves-effect">Cancel</button>  
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

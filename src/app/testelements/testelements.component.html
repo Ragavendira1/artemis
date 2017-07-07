@@ -1,0 +1,99 @@
+<alert></alert>
+<br/>
+<div class="row grey-text text-darken-1">
+  <div class="col s8">
+    <div class="valign-wrapper">
+      <a (click)="global.navigate('')">Home</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('workspace')">Workspace</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('testelements')">Test Elements</a>
+    </div>
+  </div>
+</div>
+<div class="row grey-text text-darken-1">
+  <div class="col s12">
+    <h5 class="left">Test Element Store</h5>
+  </div>
+</div>
+<div class="row">
+  <span class="center card amber lighten-5 red-text col s12" *ngIf="showNoDataError"><br/>
+  <i class="material-icons">error_outline</i><br/>
+    You don't have any active applications under test. Click <a (click)="global.navigate('applications/add')" class="blue lighten-5"><strong>here</strong></a> to add application.<br/><br/>
+  </span>
+  <div class="input-field col s12" *ngIf="!showNoDataError">
+    <select id="application" name="application" materialize="material_select" [materializeSelectOptions]="applications" 
+      [(ngModel)]="formModel.application" #application="ngModel" (change)="onChange()">
+      <option value="title" disabled>- Select an Application -</option>
+      <option *ngFor="let application of applications;" [ngValue]="application">{{application.name}} - [Type: {{application.type}}]</option>
+    </select>
+    <label for="application">Application Under Test (AUT):</label>
+  </div>
+</div>
+<div class="row" *ngIf="!showNoDataError">
+  <div class="col s12">
+    <button id="buttonAdd" class="waves-effect btn green" (click)="addStore()" 
+      [disabled]="!global.getSelectedApplication() || serviceError">
+      <i class="material-icons left">add</i>Add Store
+    </button>
+    <a class="waves-effect btn-floating orange" (click)="refresh()"><i class="material-icons left">loop</i></a>
+  </div>
+</div>
+
+<div class="row">
+  <span data-badge-caption="" *ngIf="elementStores.length>0" class="new badge blue-grey left">Total: {{elementStores.length}}</span>
+  <div class="col s12" *ngFor="let elementStore of elementStores; let i = index">
+    <div class="card z-depth-4 grey lighten-5">
+      <div class="card-content blue-grey-text">
+        <span class="card-title blue-grey-text text-darken-3">
+          <a class="blue-grey-text text-darken-3" (click)="openStore(elementStore)"><i class="material-icons left" title="Open">launch</i>{{elementStore.name}}</a>
+        </span>
+        <li class="divider"></li><br/>
+        <p>{{elementStore.description}}</p>
+        <p>Created by {{elementStore.createdbyfullname}} [{{elementStore.createdby}}]
+        on {{elementStore.createdon | date: 'dd-MMM-yyyy h:mm:ss a'}}</p>
+      </div>
+      <div class="card-action">
+        <button (click)="editStore(elementStore)" class="btn btn-small orange waves-effect"><i class="material-icons left">mode_edit</i>Edit</button>
+        <button (click)="deleteStoreConfirmation(elementStore)" class="btn btn-small red waves-effect"><i class="material-icons left">delete_forever</i>Delete</button>  
+      </div>
+    </div>
+  </div>
+  <div class="center red-text" *ngIf="global.getSelectedApplication() && elementStores.length==0">
+    <i class="material-icons">error_outline</i>
+    <span class="slim-title"><br /><br />You have not added any element store for this application.</span>
+  </div>
+</div>
+
+<div id="addeditelementstore" class="modal modal-fixed-footer">
+  <form materialize name="form" (ngSubmit)="saveStore()" #form="ngForm" novalidate>
+    <div class="modal-content">
+      <h4>{{modalTitle}}</h4><br />
+      <div class="input-field">
+        <input placeholder="" type="text" data-length="80" name='name' id='name' [(ngModel)]="formModel.name" #name="ngModel">
+        <label for="name">Element Store Name</label>
+      </div>
+      <label class="red-text col s12" *ngIf="elementIndex==0">{{ errorMessage }}</label><br /><br />
+      <div class="input-field">
+        <textarea placeholder="" class="materialize-textarea" data-length="120" name='description' id='description' [(ngModel)]="formModel.description" #description="ngModel"></textarea>
+        <label for="description">Description</label>
+      </div>
+      <label class="red-text col s12" *ngIf="elementIndex==1">{{ errorMessage }}</label>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="clearForm()" type="reset">Cancel</button>
+      <button class="modal-action waves-effect waves-green btn-flat" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+<div id="deleteconfirmation" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4>Delete Element Store</h4>
+    <strong class="red-text text-darken-2">Do you want to delete the application store '<u>{{storeName}}</u>'?</strong>
+  </div>
+  <div class="modal-footer"><li class="divider"></li>
+    <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+    <a (click) = "deleteStore()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>      
+  </div>
+</div>

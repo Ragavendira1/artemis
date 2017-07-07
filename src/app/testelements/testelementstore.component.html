@@ -1,0 +1,28 @@
+<alert></alert>
+<br/>
+<div class="row grey-text text-darken-1">
+  <div class="col s8">
+    <div class="valign-wrapper">
+      <a (click)="global.navigate('')">Home</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('workspace')">Workspace</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('testelements')">Test Elements</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('testelements/store')">Store</a>
+    </div>
+  </div>
+</div>
+<ul class="collapsible collapsible-card slim-font" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header grey-text text-darken-1" title="Click to expand for more information">
+      <i class="material-icons">expand_more</i>{{global.getSelectedElementStore().name}}
+    </div>
+    <div class="collapsible-body">
+      <div class="row grey-text text-darken-2">
+        <div class="col s12">Type: {{global.getSelectedApplication().type}}</div>
+        <div class="col s12">Application: {{global.getSelectedApplication().name}}</div>
+      </div>
+    </div>
+  </li>
+</ul>

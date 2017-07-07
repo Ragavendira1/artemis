@@ -1,0 +1,45 @@
+<br /><br />
+<div class="z-depth-5 container row" >
+    <div class="center-align grey lighten-4"><br />
+        <img class="responsive-img" src="assets/artemis96.png" />
+        <h4 class="blue-grey-text text-darken-2" style="margin: 0">ARTEMIS</h4><br />
+    </div>
+    <div class="white col s12" >
+        <form class="container" name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
+            <alert></alert>
+            <div *ngIf="!loading">
+                <h5 class="blue-grey-text text-darken-2">Sign In</h5>
+            </div>
+            <div *ngIf="loading">
+                <h5 class="blue-grey-text text-darken-2">Signing In...</h5>
+                <div class="progress white">
+                    <div class="indeterminate blue-grey"></div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='input-field col s12'>
+                    <input type='text' name='username' id='username' [(ngModel)]="model.username" #username="ngModel" />
+                    <label for='username'>User Name</label>
+                </div>
+                <label class="red-text col s12" *ngIf="elementindex==0">{{ errormessage }}</label>
+            </div><br />
+            <div class='row'>
+                <div class='input-field col s12'>
+                    <input placeholder="Minimum 8 Characters"  type='password' name='password' id='password' [(ngModel)]="model.password" #password="ngModel" />
+                    <label for='password'>Password</label>
+                </div>
+                <label class="red-text col s12" *ngIf="elementindex==1">{{ errormessage }}</label>
+            </div>
+            <div class='row'>
+                <div class='col s12 center-align'>
+                    <button type="submit" [disabled]="loading" name='btn_login' class='col s12 btn btn-large waves-effect waves-ripple blue-grey darken-2'><i class="material-icons right">send</i>Sign In</button>
+                </div>
+            </div>
+            <div class='col s12'>
+                <label>
+                    <a class='red-text right' (click)="global.navigate('forgotpassword')" *ngIf="!loading"><b>Forgot Password?</b></a><br /><br />
+                </label>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div *ngIf="message" id="alert" [ngClass]="{ 'card card-panel white-text valign-wrapper': message, 'green': message.type === 'success', 'red': message.type === 'error' }">
+    <i *ngIf="message.type === 'success'" class="material-icons">done</i>
+    <i *ngIf="message.type === 'error'" class="material-icons">error_outline</i>
+    &nbsp;&nbsp;{{message.text}}
+    <a class="close" (click)='closeAlert()'>
+        <i class="material-icons">close</i>
+    </a>
+</div>

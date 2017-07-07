@@ -1,0 +1,58 @@
+<alert></alert>
+<br/>
+<div class="row grey-text text-darken-1">
+  <div class="col s8">
+    <div class="valign-wrapper">
+      <a (click)="global.navigate('')">Home</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('workspace')">Workspace</a>
+      <i class="material-icons">keyboard_arrow_right</i>
+      <a (click)="global.navigate('applications')">Applications</a>
+    </div>
+  </div>
+</div>
+<div class="row grey-text text-darken-1 valign-wrapper">
+  <div class="col s8">
+      <h5 class="left">Applications</h5>
+      <span data-badge-caption="" class="new badge blue-grey left" title="Total Applications: {{applications.length}}">{{applications.length}}</span>
+  </div>
+  <div class="col s4 right-align">
+    <a id="buttonAdd" class="waves-effect btn-floating green" *ngIf="global.isProjectAdmin()" (click)="addApplication()"><i class="material-icons left">add</i></a>
+    <a class="waves-effect btn-floating orange" (click)="refresh()"><i class="material-icons left">loop</i></a>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12" *ngFor="let application of applications; let i = index">
+    <div class="card z-depth-4 grey lighten-5">
+      <div class="card-content blue-grey-text">
+        <span class="card-title blue-grey-text text-darken-3">{{application.name}}</span>
+        <p class="blue-text"><strong>Type: {{application.type}}</strong></p>
+        <li class="divider"></li><br/>
+        <p>{{application.description}}</p>
+        <p>Technology: {{application.technology}}</p>
+        <p>Created by {{application.createdbyfullname}} [{{application.createdby}}]
+        on {{application.createdon | date: 'dd-MMM-yyyy h:mm:ss a'}}</p>
+      </div>
+      <div [hidden]="!global.isProjectAdmin()" class="card-action">
+        <button *ngIf="global.isProjectAdmin()" (click)="editApplication(application)" class="btn btn-small orange waves-effect"><i class="material-icons left">mode_edit</i>Edit</button>
+        <button *ngIf="global.isProjectAdmin()" (click)="deleteApplicationConfirmation(application)" class="btn btn-small red waves-effect"><i class="material-icons left">delete_forever</i>Delete</button>  
+      </div>
+    </div>
+  </div>
+  <div class="card center red-text" *ngIf="applications.length===0">
+    <br /><br />
+    <i class="material-icons">error_outline</i>
+    <span class="slim-title"><br /><br />There are no applications to display. Click <a (click)="global.navigate('applications/add')" class="blue lighten-5"><strong>here</strong></a> to add application.<br /><br /></span>
+  </div>
+</div>
+
+<div id="deleteconfirmation" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4>Delete Application</h4>
+    <strong class="red-text text-darken-2">Do you want to delete the application '<u>{{applicationName}}</u>'?</strong>
+  </div>
+  <div class="modal-footer"><li class="divider"></li>
+    <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+    <a (click) = "deleteApplication()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>      
+  </div>
+</div>

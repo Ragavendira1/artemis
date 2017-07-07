@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+main{
+    padding-bottom: 32px;
+}
+.close {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    color: inherit;
+    margin-top: -18px;
+}
+
+.footer-main{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+    z-index: 100;
+}
+
+a{
+    cursor: pointer;
+}
+
+.collapsible-menu li>a{
+    font-weight: normal;
+}
+
+.tabs {
+    overflow-x: hidden;
+}
+
+.btn-small {
+    height: 24px;
+    line-height: 1.75em;
+    padding: 0 0.4em 0 0.4em;
+    margin: 0;
+}
+
+.btn-tool {
+    height: 32px;
+    width: 32px;
+    line-height: 1.75em;
+    padding: 0 0.4em 0 0.4em;
+    margin: 0;
+}
+
+@media only screen and (max-width: 992px) {
+.btn-tool {
+        height: 32px;
+        width: 32px;
+        line-height: 1.75em;
+        padding: 0 0.55em 0 0.55em;
+        margin: 0;
+    }
+}
+
+.btn-tool i{
+    padding: 0;
+    margin: 0;
+}
+
+.input-field input, .input-field textarea{
+    margin-bottom: 0;
+}
+
+.collapsible-card{
+    margin: 10px;
+}
+
+.collapsible-card .collapsible-header{
+    font-size: 22px;
+}
+
+.slim-font{
+    font-weight: 300;
+}
+
+.marginLR10{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.slim-title{
+    font-size: 20px;
+    font-weight: 300;
+}

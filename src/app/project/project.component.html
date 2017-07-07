@@ -1,0 +1,108 @@
+<alert></alert>
+<div class="row grey-text text-darken-1 valign-wrapper">
+  <div class="col s8">
+      <h5>Projects</h5>
+  </div>
+  <div class="col s4 right-align"><br />
+      <a id="buttonAdd" class="waves-effect btn-floating green" *ngIf="!isPublic" (click)="addProject()"><i class="material-icons left">add</i></a>
+      <a class="waves-effect btn-floating orange" (click)="ngOnInit()"><i class="material-icons left">loop</i></a>
+  </div>
+</div>
+<div class="row grey-text text-darken-1">
+  <div class="col s12">
+    <ul class="tabs" materialize="tabs" >
+      <div class="indicator orange darken-4"></div><!-- onclick="Materialize.fadeInImage('#privateprojects')" -->
+      <li class="tab col s6"><a class="active blue-grey-text" href="#publicprojects" (click)="isPublic=true">Live Projects</a></li>
+      <li class="tab col s6"><a class="blue-grey-text" href="#privateprojects" (click)="isPublic=false">Sandbox</a></li>
+    </ul>
+  </div>
+  <div id="publicprojects" class="col s12"><br />
+    <span data-badge-caption="" class="new badge blue-grey left">Total Projects: {{getLength(publicProjects)}}</span>
+    <table class="highlight" *ngIf="getLength(publicProjects)>0">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Description</th>
+          <th>Created By</th>
+          <th>Created On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of publicProjects; let i = index">
+          <td><a (click)="openProject(project)">{{project.name}}<i class="material-icons left" title="Open">launch</i></a></td>
+          <td>{{project.description}}</td>
+          <td>{{project.createdbyfullname}} [{{project.createdby}}]</td>
+          <td>{{project.createdon | date: 'dd-MMM-yyyy h:mm:ss a'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="center red-text" *ngIf="!getLength(publicProjects)>0">
+      <br /><br />
+      <i class="material-icons">error_outline</i>
+      <span class="slim-title"><br /><br />There are no live projects assigned to you!</span>
+    </div>
+  </div>
+  <div id="privateprojects" class="col s12"><br />
+    <span data-badge-caption="" class="new badge blue-grey left">Total Projects: {{getLength(privateProjects)}}</span>
+    <table class="highlight" *ngIf="getLength(privateProjects)>0">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th style="width: 80px;">&nbsp;</th>
+          <th>Description</th>
+          <th>Created On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of privateProjects; let i = index">
+          <td><a (click)="openProject(project)">{{project.name}}<i class="material-icons left" title="Open">launch</i></a></td>
+          <td>
+            <button (click)="editProject(project)" class="btn btn-tool orange waves-effect"><i class="material-icons left">mode_edit</i></button>
+            <button (click)="deleteProjectConfirmation(project)" class="btn btn-tool red waves-effect"><i class="material-icons left">delete_forever</i></button>
+          </td>
+          <td style="word-wrap: break-word;">{{project.description}}</td>
+          <td>{{project.createdon | date: 'dd-MMM-yyyy h:mm:ss a'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="center red-text" *ngIf="!getLength(privateProjects)>0">
+      <br /><br />
+      <i class="material-icons">error_outline</i>
+      <span class="slim-title"><br /><br />You have no active projects!</span>
+      <span class="slim-title"><br /><br />Click '+' to create new project.</span>
+    </div>
+  </div>
+</div>
+
+<div id="addeditproject" class="modal modal-fixed-footer">
+  <form materialize name="form" (ngSubmit)="saveProject()" #form="ngForm" novalidate>
+    <div class="modal-content">
+      <h4>{{modalTitle}}</h4><br />
+      <div class="input-field">
+        <input placeholder="" type="text" data-length="80" name='name' id='name' [(ngModel)]="formModel.name" #name="ngModel">
+        <label for="name">Project Name</label>
+      </div>
+      <label class="red-text col s12" *ngIf="elementIndex==0">{{ errorMessage }}</label><br /><br />
+      <div class="input-field">
+        <textarea placeholder="" class="materialize-textarea" data-length="120" name='description' id='description' [(ngModel)]="formModel.description" #description="ngModel"></textarea>
+        <label for="description">Description</label>
+      </div>
+      <label class="red-text col s12" *ngIf="elementIndex==1">{{ errorMessage }}</label>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-red btn-flat " type="reset">Cancel</button>
+      <button class="modal-action waves-effect waves-green btn-flat " type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+<div id="deleteconfirmation" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4>Delete Project</h4>
+    <strong class="red-text text-darken-2">Do you want to delete the project '<u>{{projectName}}</u>' and all its resources?</strong>
+  </div>
+  <div class="modal-footer"><li class="divider"></li>
+    <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancel</a>
+    <a (click) = "deleteProject()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>      
+  </div>
+</div>

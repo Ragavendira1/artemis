@@ -1,0 +1,149 @@
+<alert></alert>
+<br/>
+<div class="row grey-text text-darken-1">
+    <div class="col s8">
+      <div class="valign-wrapper">
+        <a (click)="global.navigate('')">Home</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        <a (click)="global.navigate('workspace')">Workspace</a>
+      </div>
+    </div>
+    <div class="col s4 right-align">
+        <a class="waves-effect btn-floating orange" (click)="ngOnInit()"><i class="material-icons left">loop</i></a>
+    </div>
+</div>
+<ul class="collapsible collapsible-card slim-font" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header grey-text text-darken-1" title="Click to expand for more information">
+      <i class="material-icons">expand_more</i>{{global.getProjectName()}}
+    </div>
+    <div class="collapsible-body">
+      <div class="row grey-text">
+        <div class="col s4 m2 l2">Description: </div>
+        <div class="col s8 m4 l4">{{project.description}}</div>
+        <div class="col s4 m2 l2">Type: </div>
+        <div class="col s8 m4 l4">{{project.type}}</div>
+        <div class="col s4 m2 l2">Created On: </div>
+        <div class="col s8 m4 l4">{{project.createdon | date: 'dd-MMM-yyyy h:mm:ss a'}}</div>
+        <div class="col s4 m2 l2">Created By: </div>
+        <div class="col s8 m4 l4">{{project.createdbyfullname}} [{{project.createdby}}]</div>
+        <div *ngIf="projectAccess" class="col s4 m2 l2">Member Since: </div>
+        <div *ngIf="projectAccess" class="col s8 m4 l4">{{projectAccess.mappeddate | date: 'dd-MMM-yyyy h:mm:ss a'}}</div>
+        <div *ngIf="projectAccess" class="col s4 m2 l2">Role: </div>
+        <div *ngIf="projectAccess" class="col s8 m4 l4">{{projectAccess.role}}</div>
+      </div>
+      <div class="row grey-text">
+        <div class="col s12"><a class="waves-effect btn btn-small blue lighten-1" onclick="$('#projectinfo').modal('open');" title="Click to view list of members associated with this project">Project Members</a></div>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col s12 l4">
+    <h5 class="grey-text text-darken-1 slim-font">Test</h5>
+    <div class="collection">
+      <a (click)="global.navigate('tests')" class="collection-item">Test Suite</a>
+      <a (click)="global.navigate('execution')" class="collection-item">Execution</a>
+      <a (click)="global.navigate('reports')" class="collection-item">Reports</a>
+      <a (click)="global.navigate('defects')" class="collection-item">Defects</a>
+    </div>
+  </div>
+  <div class="col s12 l4">
+    <h5 class="grey-text text-darken-1 slim-font">Resources</h5>
+    <div class="collection">
+      <a (click)="global.navigate('applications')" class="collection-item">Applications</a>
+      <a (click)="global.navigate('requirements')" class="collection-item">Requirements</a>
+      <a (click)="global.navigate('testelements')" class="collection-item">Test Elements</a>
+      <a (click)="global.navigate('testdata')" class="collection-item">Test Data</a>
+      <a (click)="global.navigate('drive')" class="collection-item">Drive</a>
+    </div>
+  </div>
+  <div class="col s12 l4">
+    <h5 class="grey-text text-darken-1 slim-font">Configurations</h5>
+    <div class="collection">
+      <a (click)="global.navigate('appsettings')" class="collection-item">General Settings</a>
+      <a (click)="global.navigate('testsettings')" class="collection-item">Test Settings</a>
+      <a (click)="global.navigate('plugins')" class="collection-item">Plugins</a>
+      <a (click)="global.navigate('devices')" class="collection-item">Environment / Devices</a>
+      <a *ngIf="global.isAdmin()" (click)="global.navigate('adminconsole')" class="collection-item">Admin Console</a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h5 class="grey-text text-darken-1 slim-font marginLR10">Project Summary</h5>
+  <div class="col s6 l3">
+    <div class="card-panel">
+      <div class="grey-text text-darken-1">Requirements</div>
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" chartType="doughnut" [legend]='false'
+                 [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="col s6 l3">
+    <div class="card-panel">
+      <div class="grey-text text-darken-1">Test Coverage</div>
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" chartType="doughnut" [legend]='false'
+                  [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="col s6 l3">
+    <div class="card-panel">
+      <div class="grey-text text-darken-1">Tests</div>
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" chartType="doughnut" [legend]='false'
+                  [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="col s6 l3">
+    <div class="card-panel">
+      <div class="grey-text text-darken-1">Defects</div>
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" chartType="doughnut" [legend]='false'
+                  [colors]="doughnutChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel">
+      <div class="grey-text text-darken-1">Test Execution</div>
+      <canvas baseChart style="max-height: 300px"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
+</div>
+
+<div id="projectinfo" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Project Members:</h4>
+      <table class="highlight">
+        <thead>
+          <tr>
+              <th>Member Name</th>
+              <th>User Name</th>
+              <th>Role</th>
+              <th>Member Since</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let projectAccess of projectAccessList; let i = index">
+            <td>{{projectAccess.userfullname}}</td>
+            <td>{{projectAccess.username}}</td>
+            <td>{{projectAccess.role}}</td>
+            <td>{{projectAccess.mappeddate | date: 'dd-MMM-yyyy h:mm:ss a'}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-red btn-flat">Close</button>
+  </div>
+</div>
